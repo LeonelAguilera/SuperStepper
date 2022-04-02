@@ -1,0 +1,63 @@
+#define RPM 0.2
+#define uSTEP 64
+
+byte o_A1 = 10;
+byte o_A2 = 11;
+byte o_B1 = 12;
+byte o_B2 = 13;
+
+byte ENA = 5;
+byte ENB = 6;
+
+bool flag_A = 1;
+bool flag_B = 1;
+
+byte analogValueA = 255;
+byte analogValueB = 255;
+
+byte i = 0;
+byte k = 64/1 ;
+
+int T = 1000;//(1000000 * 1.8) / (RPM * 6 * uSTEP); //T = 1e6*60*θ/(RPM*360*μstep)
+
+void setup() {
+  pinMode(o_A1, OUTPUT);
+  pinMode(o_A2, OUTPUT);
+  pinMode(o_B1, OUTPUT);
+  pinMode(o_B2, OUTPUT);
+
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  Serial.begin(2000000);
+}
+
+void loop() {
+  digitalWrite(o_A1, flag_A);
+  digitalWrite(o_A2, ~flag_A);
+  digitalWrite(o_B1, flag_B);
+  digitalWrite(o_B2, ~flag_B);
+
+  analogWrite(ENA, analogValueA);
+  analogWrite(ENB, analogValueB);
+
+  flag_A = ((i+64)%256 > 127);
+  flag_B = ((i+128)%256 > 127);
+
+  //analogValueA = min(8*abs((i%128) - 64), 255);
+  //analogValueB = min(8*abs(((i+64)%128) - 64), 255);
+  analogValueA = 255*abs(cos((float)i/40.74));
+  analogValueB = 255*abs(sin((float)i/40.74));
+  i+=k;
+  //delay(T/10);
+  delayMicroseconds(T);
+  printShit();
+}
+
+inline void printShit(){
+  for(int i = 0; i <= k; i++){
+    Serial.print(analogValueA*(flag_A?1:-1));
+    Serial.print(",");
+    Serial.println(analogValueB*(flag_B?1:-1));
+  }
+}
