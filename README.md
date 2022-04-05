@@ -1,9 +1,9 @@
 # SuperStepper
 Los motores paso a paso son máquinas muy interesantes. Permiten un control de posición en lazo abierto con una precisión excepcional, precisión que se puede incrementar a través de software. Para ello esxiste un gran abanico de drivers con el objetivo de facilitar su control, sin embargo, estos suponen un coste extra que según el proyecto puede no ser despreciable, o el no tenerlos disponibles cuando necesitas hacer una prueba rápida puede retrasar el proyecto. Por estas y muchas más razones es conveniente ser capaz de controlar estos motores sin el uso de drivers, los cuales reemplazaré (principalmente) con la unidad de control más abundante en los laboratorios maker: El Arduino UNO.
 
-Con estas condiciones la principal limitación es evidente, los Arduinos UNO tienen una salida máxima de 5V 40mA por pin, mucho menos de lo que la mayoría motores paso a paso necesitan para funcionar. Para salvar esta limitación se añadirá el uso de un puente H por fase. En los distintos códigos (salvo que se indique lo contrario) en lo referido al control del puente H se usará la notación de los módulos de puente H basados en el L298N:
-  ·**ENx:** Enable del puente H "x" (ejemplo: ENA es el _enable_ del puente H **A**)
-  ·**INy/INy+1:** Activa un lado u otro del puente H número 2·y (ejemplo: IN3 activa un lado del puente H **B** e IN4 activa el otro lado)
+Con estas condiciones la principal limitación es evidente, los Arduinos UNO tienen una salida máxima de 5V 40mA por pin, mucho menos de lo que la mayoría motores paso a paso necesitan para funcionar. Para salvar esta limitación se añadirá el uso de un puente H por fase. En los distintos códigos (salvo que se indique lo contrario) en lo referido al control del puente H se usará la notación de los módulos de puente H basados en el L298N:<br/>
+  ·**ENx:** Enable del puente H "x" (ejemplo: ENA es el _enable_ del puente H **A**)<br/>
+  ·**INy/INy+1:** Activa un lado u otro del puente H número 2·y (ejemplo: IN3 activa un lado del puente H **B** e IN4 activa el otro lado)<br/><br/>
 
 Otra de las limitaciones de este sistema es la falta de protecciones (incluso los drivers de motores paso a paso más baratos incluyen protección contra sobrecorriente, muy importante a la hora de mantener la posición del motor), la inclusión de estas se irá desarrollando junto al proyecto.
 
